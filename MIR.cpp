@@ -1,8 +1,6 @@
 
 
 #include "MIR.h"
-#include "str_switch.h"
-using namespace std;
 
 char* str_replace(char* str, size_t size, const char* old, const char* ns);
 
@@ -17,8 +15,7 @@ MIR::MIR(char * file_name){
 void MIR::get_without_keys(){
     if ((_FileMode & S_IFMT)!=S_IFDIR){
             string line;
-            ifstream fin(_FileName, ios::in);
-            
+            ifstream fin(_FileName, ios::in); 
             while (getline(fin,line)){
                cout << line << endl;
             }
@@ -28,10 +25,10 @@ void MIR::get_without_keys(){
     }
 }
 
-void MIR::get_with_keys(char * mode){
+void MIR::get_with_keys(char mode){
+
     if ((_FileMode & S_IFMT)!=S_IFDIR){
-            SWITCH(mode){
-            CASE("-b"):{
+        if (mode == 'b') {
                 /*
                 Вывод файла полностью, только с нумерацией не пустых строк
                 */
@@ -47,9 +44,7 @@ void MIR::get_with_keys(char * mode){
                     }
                 }
                 fin.close();
-                break;
-            }
-            CASE("-E"):{
+        } else if (mode == 'E') {
                 /*
                 В конец каждой строки при выводе дописывать $
                 */
@@ -59,9 +54,8 @@ void MIR::get_with_keys(char * mode){
                         cout << line << "$" << endl;
                     } 
                 fin.close();
-                break;
-            }
-            CASE("-n"):{
+            /* code */
+        } else if (mode == 'n') {
                 /*
                 Вывод файла полностью, только с нумерацией всех строк
                 */
@@ -73,9 +67,8 @@ void MIR::get_with_keys(char * mode){
                         count ++;
                     } 
                 fin.close();
-                break;
-            }
-            CASE("-T"):{
+            /* code */
+        } else if (mode == 'T') {
                 /*
                 Если есть сиволы табуляции показывать как ^I
                 */
@@ -91,8 +84,7 @@ void MIR::get_with_keys(char * mode){
                         cout << cline << endl;                   
                     } 
                 fin.close();
-                break;
-            }
+            /* code */
         }
     } else {
         cout << "Это каталог. Пвторите попытку с файлом." << endl;
@@ -128,4 +120,4 @@ void MIR::get_with_keys(char * mode){
 		str += len2;
 	}
 	return tmp;
-}
+			}
